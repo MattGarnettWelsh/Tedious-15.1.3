@@ -40,7 +40,6 @@
         "tag": "next"
     },
     "dependencies": {
-        "@azure/identity": "^2.0.4",
         "@js-joda/core": "^5.2.0",
         "bl": "^5.0.0",
         "es-aggregate-error": "^1.0.8",

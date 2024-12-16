@@ -8,13 +8,6 @@ import { SecureContextOptions } from 'tls';
 
 import { Readable } from 'stream';
 
-import {
-  DefaultAzureCredential,
-  ClientSecretCredential,
-  ManagedIdentityCredential,
-  UsernamePasswordCredential,
-} from '@azure/identity';
-
 import BulkLoad, { Options as BulkLoadOptions, Callback as BulkLoadCallback } from './bulk-load';
 import Debug from './debug';
 import { EventEmitter, once } from 'events';
@@ -3403,28 +3396,14 @@ Connection.prototype.STATE = {
 
           switch (authentication.type) {
             case 'azure-active-directory-password':
-              credentials = new UsernamePasswordCredential(
-                authentication.options.tenantId ?? 'common',
-                authentication.options.clientId,
-                authentication.options.userName,
-                authentication.options.password
-              );
               break;
             case 'azure-active-directory-msi-vm':
+                break;
             case 'azure-active-directory-msi-app-service':
-              const msiArgs = authentication.options.clientId ? [authentication.options.clientId, {}] : [{}];
-              credentials = new ManagedIdentityCredential(...msiArgs);
               break;
             case 'azure-active-directory-default':
-              const args = authentication.options.clientId ? { managedIdentityClientId: authentication.options.clientId } : {};
-              credentials = new DefaultAzureCredential(args);
               break;
             case 'azure-active-directory-service-principal-secret':
-              credentials = new ClientSecretCredential(
-                authentication.options.tenantId,
-                authentication.options.clientId,
-                authentication.options.clientSecret
-              );
               break;
           }
 
